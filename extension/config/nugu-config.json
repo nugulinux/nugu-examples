@@ -1,0 +1,19 @@
+{
+    "auth_server": "https://stg-api.sktnugu.com/",
+    "auth": {
+        "access_token" : "",
+        "refresh_token" : "",
+        "scope" : "",
+        "token_type" : "",
+        "jti" : "",
+        "expires_in" : 0,
+        "expired_time" : 0
+    },
+    "device": {
+        "client_id" : "speaker.nugu.nu110",
+        "client_secret" : "b35dd141-719e-4e58-85b8-07336df0aded",
+        "serial_number" : "",
+        "device_type_code" : "DVC_SPK_NU110",
+        "poc_id" : "speaker.nugu.nu110"
+    }
+}
