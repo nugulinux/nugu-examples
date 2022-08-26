@@ -1,0 +1,4 @@
+// Disabled
+useStlAlgorithm
+noCopyConstructor
+noOperatorEq

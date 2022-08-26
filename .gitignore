@@ -1,0 +1,21 @@
+# IDE
+nbproject
+.vscode/
+.project
+.cproject
+
+build*/
+
+# Binary
+*.o
+*.a
+*.so*
+
+# GNU Global
+GPATH
+GRTAGS
+GTAGS
+GSYMS
+
+# Etc
+.DS_Store
