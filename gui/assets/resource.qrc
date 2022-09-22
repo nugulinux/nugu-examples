@@ -1,0 +1,30 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/main.qml</file>
+        <file>qml/TemplateView.qml</file>
+        <file>qml/VoiceChrome.qml</file>
+        <file>qml/TextCommand.qml</file>
+        <file>qml/VolumePopup.qml</file>
+        <file>images/01_intro.json</file>
+        <file>images/02_passive.json</file>
+        <file>images/03_transition.json</file>
+        <file>images/04_active.json</file>
+        <file>images/05_processing.json</file>
+        <file>images/06_transition.json</file>
+        <file>images/07_speaking.json</file>
+        <file>images/power.svg</file>
+        <file>images/stop.svg</file>
+        <file>images/text.svg</file>
+        <file>images/send_text.svg</file>
+        <file>images/mic.svg</file>
+        <file>images/mute.svg</file>
+        <file>images/mute_status.svg</file>
+        <file>images/volume_up.svg</file>
+        <file>images/volume_down.svg</file>
+        <file>images/volume_level.svg</file>
+        <file>images/nugu_logo.png</file>
+        <file>scripts/qwebchannel.js</file>
+        <file>scripts/lottie-5.9.6.min.js</file>
+        <file>scripts/voice_chrome_indicator.html</file>
+    </qresource>
+</RCC>

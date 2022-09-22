@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>VoiceChrome Indicator</title>
+    <script type="text/javascript" src="qrc:/scripts/lottie-5.9.6.min.js"></script>
+    <style>
+        body {
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div id="indicator"></div>
+    <script type="text/javascript">
+        const INDICATOR_RESOURECES = new Map([
+            [ "INTRO", "qrc:/images/01_intro.json" ],
+            [ "PASSIVE", "qrc:/images/02_passive.json" ],
+            [ "ACTIVE_TRANS", "qrc:/images/03_transition.json" ],
+            [ "ACTIVE", "qrc:/images/04_active.json" ],
+            [ "PROCESSING", "qrc:/images/05_processing.json" ],
+            [ "SPEAKING_TRANS", "qrc:/images/06_transition.json" ],
+            [ "SPEAKING", "qrc:/images/07_speaking.json" ],
+        ]);
+
+        var preload_animation;
+        var main_animation;
+
+        function loadAnimation(resource, loop) {
+            return bodymovin.loadAnimation({
+                wrapper: document.getElementById("indicator"),
+                renderer: "svg",
+                loop: loop,
+                autoplay: true,
+                path: resource
+            });
+        }
+
+        function renderIndicator(preload, main) {
+            var preload_resource = INDICATOR_RESOURECES.get(preload);
+            var main_resource = INDICATOR_RESOURECES.get(main);
+
+            clearIndicator();
+
+            loadMainAnimation = function() {
+                if (main_resource) {
+                    main_animation = loadAnimation(main_resource, true);
+                }
+            ;}
+
+            if (preload_resource) {
+                preload_animation = loadAnimation(preload_resource, false);
+                preload_animation.addEventListener("complete", function() {
+                    preload_animation.destroy();
+                    loadMainAnimation();
+                })
+            } else {
+                loadMainAnimation();
+            }
+        }
+
+        function clearIndicator() {
+            if (preload_animation) {
+                preload_animation.destroy();
+            }
+            if (main_animation) {
+                main_animation.destroy();
+            }
+        }
+    </script>
+</body>
+</html>

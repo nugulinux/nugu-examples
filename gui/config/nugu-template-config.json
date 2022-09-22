@@ -1,0 +1,11 @@
+{
+    "templateServer": "",
+    "deviceTypeCode": "",
+    "clientInfo": {
+        "firmwareVersion": "0.0",
+        "nuguSdkVersion": "1.7.3",
+        "nuguAppVersion": "0.14.0",
+        "modelNumber": "linux_sampleapp",
+        "displayInterfaceVersion": "1.9"
+    }
+}
