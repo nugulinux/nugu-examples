@@ -12,4 +12,3 @@ IF (TARGET nugu-extension)
 ENDIF()
 
 INSTALL(TARGETS ${target_app} DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR})
-INSTALL(FILES config/nugu-config.json DESTINATION ${storagedir})

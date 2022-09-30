@@ -56,8 +56,11 @@ NuguAdaptor::NuguAdaptor(QObject* parent)
     speech_operator->addListener(this);
     sdk_manager->getVoiceChrome()->setListener(voice_chrome_adaptor.get());
 
-    sdk_manager->readAuthConfigurationFile(std::string(NUGU_STORAGE_PATH) + NUGU_GUI_CONFIG_FILENAME);
-    display_manager->loadTemplateConfig(std::string(NUGU_STORAGE_PATH) + NUGU_TEMPLATE_CONFIG_FILENAME);
+    std::string storage_path = sdk_manager->getStoragePath();
+    if ((storage_path.size() > 0) {
+        sdk_manager->readAuthConfigurationFile(storage_path + NUGU_CONFIG_FILENAME);
+        display_manager->loadTemplateConfig(storage_path + NUGU_TEMPLATE_CONFIG_FILENAME);
+    }
 }
 
 NuguAdaptor::~NuguAdaptor()

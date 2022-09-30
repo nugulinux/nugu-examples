@@ -42,9 +42,6 @@ SDKManagerWrapper::SDKManagerWrapper()
 {
     pimpl->sdk_manager->addListener(this);
     pimpl->sdk_manager->addNetworkListener(this);
-
-    std::string nugu_config_file(std::string { NUGU_STORAGE_PATH } + NUGU_CONFIG_FILENAME);
-    pimpl->sdk_manager->readAuthConfigurationFile(nugu_config_file);
     pimpl->sdk_manager->getSpeechOperator()->addListener(pimpl->integrated_state_listener.get());
 }
 
@@ -59,6 +56,14 @@ std::shared_ptr<SDKManager> SDKManagerWrapper::getSDKManager()
 
 void SDKManagerWrapper::start()
 {
+    std::string nugu_config_file = pimpl->sdk_manager->getStoragePath();
+    if (nugu_config_file.size() > 0) {
+        nugu_config_file += NUGU_CONFIG_FILENAME;
+        pimpl->sdk_manager->readAuthConfigurationFile(nugu_config_file);
+    } else {
+        nugu_error("invalid storage path for configuration");
+    }
+
     pimpl->sdk_manager->activateCapabilities({
         "ASR",
         "AudioPlayer",

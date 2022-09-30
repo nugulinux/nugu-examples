@@ -25,4 +25,3 @@ ADD_EXECUTABLE(${target_app} ${sources} assets/resource.qrc)
 TARGET_LINK_LIBRARIES(${target_app} PRIVATE ${pkgs_LDFLAGS})
 
 INSTALL(TARGETS ${target_app} DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR})
-INSTALL(DIRECTORY config/ DESTINATION ${storagedir})
