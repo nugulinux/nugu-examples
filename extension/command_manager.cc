@@ -61,13 +61,13 @@ CommandManager::CommandManager(SDKManagerWrapper* sdk_manager_wrapper)
                  pimpl->sdk_manager_wrapper->stop();
          } },
         { "asr", [&](const std::string& param) {
-             if (pimpl->sdk_manager_wrapper->isStarted())
+             if (pimpl->sdk_manager_wrapper->isStarted() && pimpl->sdk_manager_wrapper->isConnected())
                  pimpl->sdk_manager_wrapper->startRecognition();
              else
                  error("start command first!");
          } },
         { "text", [&](const std::string& param) {
-             if (pimpl->sdk_manager_wrapper->isStarted())
+             if (pimpl->sdk_manager_wrapper->isStarted() && pimpl->sdk_manager_wrapper->isConnected())
                  pimpl->sdk_manager_wrapper->sendTextCommand(param);
              else
                  error("start command first!");

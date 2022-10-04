@@ -100,7 +100,7 @@ void SDKManagerWrapper::stop()
 
 bool SDKManagerWrapper::isStarted()
 {
-    return pimpl->sdk_manager->isStarted() && pimpl->is_connected;
+    return pimpl->sdk_manager->isStarted();
 }
 
 bool SDKManagerWrapper::isConnected()
