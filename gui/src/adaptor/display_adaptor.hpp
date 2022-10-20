@@ -19,16 +19,19 @@
 
 #include <QObject>
 
+#include <clientkit/nugu_runner.hh>
 #include <extension/display_manager_interface.hh>
 
 using namespace NuguExtension;
+using namespace NuguClientKit;
 
 class DisplayAdaptor : public QObject,
-                       public IDisplayManagerListener {
+                       public IDisplayManagerListener,
+                       public NuguRunner {
     Q_OBJECT
 public:
     explicit DisplayAdaptor(QObject* parent = nullptr);
-    virtual ~DisplayAdaptor();
+    virtual ~DisplayAdaptor() = default;
 
     // implements IDisplayManagerListener-ITemplateListener
     void renderDisplay(const std::string& id, const std::string& params) override;

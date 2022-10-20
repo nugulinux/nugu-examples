@@ -106,6 +106,9 @@ ApplicationWindow {
         y: controlbarHeight
         width: parent.width
         height: parent.height - controlbarHeight
+
+        // decide to turn on when the display template loading speed is slow
+        showProgress: false
     }
 
     VoiceChrome {

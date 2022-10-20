@@ -12,7 +12,8 @@ It's the console based Sample Application. It provide the CLI for operation.
 
 It's the GUI Sample Application to use display template and GUI like voice chrome, volume control, etc.
 
-[NUGU GUI Sample Start Guide](https://github.com/nugulinux/nugu-examples/wiki/Ubuntu-Linux-GUI-Sample-Quick-Start)
+* [NUGU GUI Sample Start Guide](https://github.com/nugulinux/nugu-examples/wiki/Ubuntu-Linux-GUI-Sample-Quick-Start)
+* [MacOS GUI Sample Quick Start](https://github.com/nugulinux/nugu-examples/wiki/MacOS-GUI-Sample-Quick-Start)
 
 ## License
 

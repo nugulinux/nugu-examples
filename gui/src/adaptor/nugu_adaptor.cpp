@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-#include <iostream>
-
 #include <capability/speaker_interface.hh>
 
 #include "nugu_adaptor.hpp"
@@ -203,31 +201,43 @@ VoiceChromeAdaptor* NuguAdaptor::getVoiceChromeAdaptor()
 
 void NuguAdaptor::startListening()
 {
-    speech_operator->startListening();
+    invokeMethod(__func__, [&]() {
+        speech_operator->startListening();
+    });
 }
 void NuguAdaptor::stopListening()
 {
-    speech_operator->stopListening();
+    invokeMethod(__func__, [&]() {
+        speech_operator->stopListening();
+    });
 }
 
 void NuguAdaptor::sendTextCommand(const QString& text, bool include_dialog_attribute, const QString& token)
 {
-    text_handler->requestTextInput(text.toStdString(), token.toStdString(), "USERINPUT", include_dialog_attribute);
+    invokeMethod(__func__, [=]() {
+        text_handler->requestTextInput(text.toStdString(), token.toStdString(), "USERINPUT", include_dialog_attribute);
+    });
 }
 
 void NuguAdaptor::volumeUp()
 {
-    speaker_controller->volumeUp();
+    invokeMethod(__func__, [&]() {
+        speaker_controller->volumeUp();
+    });
 }
 
 void NuguAdaptor::volumeDown()
 {
-    speaker_controller->volumeDown();
+    invokeMethod(__func__, [&]() {
+        speaker_controller->volumeDown();
+    });
 }
 
 void NuguAdaptor::toggleMute()
 {
-    speaker_controller->toggleMute();
+    invokeMethod(__func__, [&]() {
+        speaker_controller->toggleMute();
+    });
 }
 
 void NuguAdaptor::powerOff()

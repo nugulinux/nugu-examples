@@ -5,6 +5,8 @@ import QtWebChannel 1.0
 import Template 1.0
 
 Item {
+    property var showProgress: false
+
     Template {
         id: backendObject
         WebChannel.id: "backend"
@@ -36,6 +38,8 @@ Item {
         onLoadingChanged: {
             if (loadRequest.status === WebEngineView.LoadSucceededStatus) {
                 if (backendObject.isTemplateView((url))) {
+                    loading_progress_bar.hide()
+
                     runJavaScript(JsWebChannel);
                     runJavaScript(backendObject.getInjection())
 
@@ -64,6 +68,8 @@ Item {
             target: backendObject
 
             onNotifyRenderDisplay: {
+                loading_progress_bar.show()
+
                 webview.isLoaded = false
                 webview.renderId = id
 
@@ -92,6 +98,45 @@ Item {
                     webview.pendingCommands.push(command)
                 }
             }
+        }
+    }
+
+    // loading progress bar
+    Item {
+        id: loading_progress_bar
+        anchors.fill: parent
+        visible: false
+
+        function show() {
+            if (parent.showProgress) {
+                visible = true
+            }
+        }
+
+        function hide() {
+            if (parent.showProgress) {
+                visible = false
+            }
+        }
+
+        Rectangle {
+            anchors.fill: parent
+            color: "black"
+            opacity: 0.7
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    // consume click event
+                }
+            }
+        }
+
+        BusyIndicator {
+            width: 200
+            height: 200
+            anchors.centerIn: parent
+            palette.dark: "white"
         }
     }
 }

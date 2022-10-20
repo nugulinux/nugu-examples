@@ -1,11 +1,29 @@
+#include <QAbstractEventDispatcher>
 #include <QDir>
 #include <QFile>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QThreadPool>
 
 #include "adaptor/display_adaptor.hpp"
 #include "adaptor/nugu_adaptor.hpp"
+#include "nugu_worker.hpp"
+
+static const char* GLIB_EVENT_DISPATCHER = "GlibEventDispatcher";
+
+static void checkAndActivateNuguWorker(NuguAdaptor* nugu)
+{
+    if (auto event_dispatcher = QCoreApplication::eventDispatcher()) {
+        std::string event_dispatcher_name = event_dispatcher->metaObject()->className();
+
+        if (event_dispatcher_name.find(GLIB_EVENT_DISPATCHER) == std::string::npos) {
+            NuguWorker* nugu_worker = new NuguWorker();
+            QThreadPool::globalInstance()->start(nugu_worker);
+            QObject::connect(nugu, &NuguAdaptor::finish, nugu_worker, &NuguWorker::finish);
+        }
+    }
+}
 
 int main(int argc, char* argv[])
 {
@@ -16,6 +34,9 @@ int main(int argc, char* argv[])
     QQmlApplicationEngine engine;
     QQmlContext* context = engine.rootContext();
     auto nugu = NuguAdaptor::getInstance();
+
+    // activate Nugu Worker if event dispatcher is not glib
+    checkAndActivateNuguWorker(nugu);
 
     QObject::connect(nugu, &NuguAdaptor::finish, &app, &QGuiApplication::quit);
     QObject::connect(

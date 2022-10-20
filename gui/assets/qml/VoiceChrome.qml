@@ -157,7 +157,7 @@ Item {
 
                 Button {
                     height: 45
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.verticalCenter: parent ? parent.verticalCenter : undefined
                     leftPadding: 20
                     rightPadding: 20
                     background: Rectangle {

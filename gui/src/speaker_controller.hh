@@ -20,7 +20,6 @@
 #include <capability/audio_player_interface.hh>
 #include <capability/speaker_interface.hh>
 #include <capability/tts_interface.hh>
-#include <clientkit/nugu_runner.hh>
 #include <extension/beep_player.hh>
 
 using namespace NuguCapability;
@@ -34,8 +33,7 @@ public:
     virtual void setMute(bool mute) = 0;
 };
 
-class SpeakerController : public ISpeakerListener,
-                          public NuguRunner {
+class SpeakerController : public ISpeakerListener {
 public:
     explicit SpeakerController(ISpeakerHandler* speaker_handler,
         ITTSHandler* tts_handler,

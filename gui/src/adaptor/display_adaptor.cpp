@@ -24,10 +24,6 @@ DisplayAdaptor::DisplayAdaptor(QObject* parent)
     template_server_url = display_manager_handler->getTemplateServerUrl().c_str();
 }
 
-DisplayAdaptor::~DisplayAdaptor()
-{
-}
-
 /*******************************************************************************
  * define IDisplayManagerListener
  ******************************************************************************/
@@ -56,68 +52,94 @@ void DisplayAdaptor::sendTemplateCommand(const std::string& command)
 
 void DisplayAdaptor::displayRendered(const QString& id)
 {
-    display_manager_handler->displayRendered(id.toStdString());
+    invokeMethod(__func__, [=]() {
+        display_manager_handler->displayRendered(id.toStdString());
+    });
 }
 
 void DisplayAdaptor::displayCleared(const QString& id)
 {
     if (!id.isEmpty())
-        display_manager_handler->displayCleared(id.toStdString());
+        invokeMethod(__func__, [=]() {
+            display_manager_handler->displayCleared(id.toStdString());
+        });
 }
 
 void DisplayAdaptor::onButtonEvent(const QString& event_type, const QString& json_data)
 {
-    display_manager_handler->onButtonEvent(event_type.toStdString(), json_data.toStdString());
+    invokeMethod(__func__, [=]() {
+        display_manager_handler->onButtonEvent(event_type.toStdString(), json_data.toStdString());
+    });
 }
 
 void DisplayAdaptor::onContextChanged(const QString& json_context)
 {
-    display_manager_handler->onContextChanged(json_context.toStdString());
+    invokeMethod(__func__, [=]() {
+        display_manager_handler->onContextChanged(json_context.toStdString());
+    });
 }
 
 void DisplayAdaptor::onControlResult(const QString& action, const QString& result)
 {
-    display_manager_handler->onControlResult(action.toStdString(), result.toStdString());
+    invokeMethod(__func__, [=]() {
+        display_manager_handler->onControlResult(action.toStdString(), result.toStdString());
+    });
 }
 
 void DisplayAdaptor::close()
 {
-    display_manager_handler->close();
+    invokeMethod(__func__, [&]() {
+        display_manager_handler->close();
+    });
 }
 
 void DisplayAdaptor::closeAll()
 {
-    display_manager_handler->closeAll();
+    invokeMethod(__func__, [&]() {
+        display_manager_handler->closeAll();
+    });
 }
 
 void DisplayAdaptor::onNuguButtonSelected()
 {
-    display_manager_handler->onNuguButtonSelected();
+    invokeMethod(__func__, [&]() {
+        display_manager_handler->onNuguButtonSelected();
+    });
 }
 
 void DisplayAdaptor::onChipSelected(const QString& text)
 {
-    display_manager_handler->onChipSelected(text.toStdString());
+    invokeMethod(__func__, [=]() {
+        display_manager_handler->onChipSelected(text.toStdString());
+    });
 }
 
 void DisplayAdaptor::showToast(const QString& toast)
 {
-    display_manager_handler->showToast(toast.toStdString());
+    invokeMethod(__func__, [=]() {
+        display_manager_handler->showToast(toast.toStdString());
+    });
 }
 
 void DisplayAdaptor::invokeActivity(const QString& class_name)
 {
-    display_manager_handler->invokeActivity(class_name.toStdString());
+    invokeMethod(__func__, [=]() {
+        display_manager_handler->invokeActivity(class_name.toStdString());
+    });
 }
 
 void DisplayAdaptor::requestTTS(const QString& text)
 {
-    display_manager_handler->requestTTS(text.toStdString());
+    invokeMethod(__func__, [=]() {
+        display_manager_handler->requestTTS(text.toStdString());
+    });
 }
 
 void DisplayAdaptor::playerCommand(const QString& command, const QString& param)
 {
-    display_manager_handler->playerCommand(command.toStdString(), param.toStdString());
+    invokeMethod(__func__, [=]() {
+        display_manager_handler->playerCommand(command.toStdString(), param.toStdString());
+    });
 }
 
 /*******************************************************************************

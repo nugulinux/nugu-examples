@@ -20,6 +20,7 @@
 #include <QObject>
 
 #include <capability/text_interface.hh>
+#include <clientkit/nugu_runner.hh>
 #include <extension/sdk_manager.hh>
 
 #include "speaker_controller.hh"
@@ -31,7 +32,8 @@ using namespace NuguExtension;
 class NuguAdaptor : public QObject,
                     public INetworkManagerListener,
                     public ISpeechRecognizerAggregatorListener,
-                    public ISpeakerControllerListener {
+                    public ISpeakerControllerListener,
+                    public NuguRunner {
     Q_OBJECT
 public:
     static NuguAdaptor* getInstance();

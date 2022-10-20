@@ -91,14 +91,10 @@ bool SpeakerController::setVolume(SpeakerType type, int volume)
 
     if (result) {
         this->volume = volume;
-        invokeMethod(
-            __func__, [&]() {
-                beep_player->setVolume(volume);
-            },
-            ExecuteType::Queued);
+        beep_player->setVolume(volume);
+        speaker_handler->informVolumeChanged(type, volume);
 
         listener->setVolume(volume);
-        speaker_handler->informVolumeChanged(type, volume);
     }
 
     return result;
@@ -110,14 +106,10 @@ bool SpeakerController::setMute(SpeakerType type, bool mute)
 
     if (result) {
         this->mute = mute;
-        invokeMethod(
-            __func__, [&]() {
-                beep_player->setMute(mute);
-            },
-            ExecuteType::Queued);
+        beep_player->setMute(mute);
+        speaker_handler->informMuteChanged(type, mute);
 
         listener->setMute(mute);
-        speaker_handler->informMuteChanged(type, mute);
     }
 
     return result;
