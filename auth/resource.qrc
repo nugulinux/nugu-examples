@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/main.qml</file>
+        <file>qml/TextInputForm.qml</file>
+        <file>qml/TextBoxForm.qml</file>
+        <file>qml/WebView.qml</file>
+    </qresource>
+</RCC>
