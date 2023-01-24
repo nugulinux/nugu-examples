@@ -42,7 +42,7 @@ public:
     Q_INVOKABLE void reset();
 
 signals:
-    void configLoaded(const QString& config_data);
+    void configLoaded(const QString& config_data, const QString& device_serial = "");
     void loadUrl(const QUrl& url);
     void close();
     void authReceived(const QString& auth_data);

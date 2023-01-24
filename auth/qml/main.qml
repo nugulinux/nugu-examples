@@ -54,6 +54,7 @@ ApplicationWindow {
         target: nugu_auth
 
         onConfigLoaded: {
+            device_serial_value.text = device_serial
             config_info.contents = config_data
 
             if (config_info.contents) {

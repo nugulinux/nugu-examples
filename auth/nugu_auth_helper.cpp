@@ -38,8 +38,31 @@ void NuguAuthHelper::openConfig(const QUrl& file_name)
 
     QFile file(file_name.toLocalFile());
 
-    if (file.open(QFile::ReadOnly | QFile::Text)) {
-        QJsonDocument config_data = QJsonDocument::fromJson(file.readAll());
+    if (!file.open(QFile::ReadOnly | QFile::Text)) {
+        qDebug() << "It's failed to open the config file.";
+        return;
+    }
+
+    QJsonDocument config_data = QJsonDocument::fromJson(file.readAll());
+
+    // check whether the config file is for nugu-extension/gui-sample or not
+    if (config_data.object().contains("auth") && config_data.object().contains("device")) {
+        qDebug() << "This is for nugu-extension/gui-sample.";
+
+        nugu_config.server_url = config_data["auth_server"].toString();
+        auth_data.setObject(config_data["auth"].toObject());
+        config_data.setObject(config_data["device"].toObject());
+
+        nugu_config.client_id = config_data["client_id"].toString();
+        nugu_config.client_secret = config_data["client_secret"].toString();
+        nugu_config.redirect_uri = config_data["redirect_uri"].toString();
+        nugu_config.poc_id = config_data["poc_id"].toString();
+        nugu_config.device_type_code = config_data["device_type_code"].toString();
+        device_serial = config_data["serial_number"].toString();
+
+    } else {
+        qDebug() << "This is official provided file.";
+
         nugu_config.server_url = config_data["OAuthServerUrl"].toString();
         nugu_config.client_id = config_data["OAuthClientId"].toString();
         nugu_config.client_secret = config_data["OAuthClientSecret"].toString();
@@ -47,12 +70,13 @@ void NuguAuthHelper::openConfig(const QUrl& file_name)
         nugu_config.poc_id = config_data["PoCId"].toString();
         nugu_config.device_type_code = config_data["DeviceTypeCode"].toString();
 
-        discovery();
-
-        emit configLoaded(config_data.toJson(QJsonDocument::Indented));
-    } else {
-        qDebug() << "It's failed to open the config file.";
+        clearAuthData();
     }
+
+    discovery();
+
+    emit configLoaded(config_data.toJson(QJsonDocument::Indented), device_serial);
+    emit authReceived(auth_data.toJson(QJsonDocument::Indented));
 }
 
 void NuguAuthHelper::saveConfig(const QUrl& file_name)
@@ -70,6 +94,7 @@ void NuguAuthHelper::saveConfig(const QUrl& file_name)
     QJsonObject config_device;
     config_device.insert("client_id", nugu_config.client_id);
     config_device.insert("client_secret", nugu_config.client_secret);
+    config_device.insert("redirect_uri", nugu_config.redirect_uri);
     config_device.insert("serial_number", device_serial);
     config_device.insert("device_type_code", nugu_config.device_type_code);
     config_device.insert("poc_id", nugu_config.poc_id);
@@ -190,11 +215,15 @@ void NuguAuthHelper::reset()
 void NuguAuthHelper::finished(QNetworkReply* reply)
 {
     auto request_url = reply->request().url();
+
+    if (request_url == discovery_info.discovery_url) {
+        handleDiscoveryResult();
+        return;
+    }
+
     auth_data = QJsonDocument::fromJson(reply->readAll());
 
-    if (request_url == discovery_info.discovery_url)
-        handleDiscoveryResult();
-    else if (request_url == discovery_info.revocation_endpoint)
+    if (request_url == discovery_info.revocation_endpoint)
         clearAuthData();
 
     emit authReceived(auth_data.toJson(QJsonDocument::Indented));
@@ -241,8 +270,6 @@ void NuguAuthHelper::handleDiscoveryResult()
         discovery_info.token_endpoint = nugu_config.server_url + AUTH_ENDPOINT_TOKEN;
     if (discovery_info.revocation_endpoint.isEmpty())
         discovery_info.revocation_endpoint = nugu_config.server_url + AUTH_ENDPOINT_REVOKE;
-
-    clearAuthData();
 }
 
 void NuguAuthHelper::requestToken(const QString& auth_code)
