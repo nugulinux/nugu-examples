@@ -6,14 +6,14 @@ It provide the several type of samples which are developed using by NUGU SDK/NUG
 
 It's the console based Sample Application. It provide the CLI for operation.
 
-[NUGU Extension Sample Start Guide](https://github.com/nugulinux/nugu-extension#readme)
+* [NUGU Extension Sample Start Guide](https://github.com/nugulinux/nugu-extension#readme)
 
 ## NUGU GUI Sample
 
 It's the GUI Sample Application to use display template and GUI like voice chrome, volume control, etc.
 
-* [NUGU GUI Sample Start Guide](https://github.com/nugulinux/nugu-examples/wiki/Ubuntu-Linux-GUI-Sample-Quick-Start)
-* [MacOS GUI Sample Quick Start](https://github.com/nugulinux/nugu-examples/wiki/MacOS-GUI-Sample-Quick-Start)
+* [NUGU GUI Sample for Ubuntu Quick Start](https://github.com/nugulinux/nugu-examples/wiki/Ubuntu-Linux-GUI-Sample-Quick-Start)
+* [NUGU GUI Sample for MacOS Quick Start](https://github.com/nugulinux/nugu-examples/wiki/MacOS-GUI-Sample-Quick-Start)
 
 ## License
 
