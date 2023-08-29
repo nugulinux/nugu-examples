@@ -22,8 +22,8 @@
 
 void VoiceChromeAdaptor::render(VoiceChromeState state, const VoiceChromeAttribute& attribute)
 {
-    Json::Value attribute_json;
-    Json::FastWriter writer;
+    NJson::Value attribute_json;
+    NJson::FastWriter writer;
 
     attribute_json["window_visible"] = attribute.window_visible;
     attribute_json["stt_guide_visible"] = attribute.stt_guide_visible;
@@ -33,10 +33,10 @@ void VoiceChromeAdaptor::render(VoiceChromeState state, const VoiceChromeAttribu
     attribute_json["stt_clear"] = attribute.stt_clear;
     attribute_json["indicator"]["preload"] = VOICE_CHROME_INDICATOR_TEXTS.at(attribute.indicator.first);
     attribute_json["indicator"]["main"] = VOICE_CHROME_INDICATOR_TEXTS.at(attribute.indicator.second);
-    attribute_json["chips"] = Json::arrayValue;
+    attribute_json["chips"] = NJson::arrayValue;
 
     for (const auto& item : attribute.chips) {
-        Json::Value chip;
+        NJson::Value chip;
         chip["type"] = CHIPS_TYPE_TEXTS.at(item.type);
         chip["text"] = item.text;
         chip["token"] = item.token;
