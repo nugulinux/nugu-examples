@@ -19,7 +19,10 @@
 #include <memory>
 #include <signal.h>
 #include <string.h>
+
+#ifndef _WIN32
 #include <unistd.h>
+#endif
 
 #include "command_manager.hh"
 #include "sdk_manager_wrapper.hh"
@@ -66,6 +69,55 @@ static gboolean onKeyInput(GIOChannel* src, GIOCondition con, gpointer userdata)
     return TRUE;
 }
 
+#ifdef _WIN32
+static char *optarg;
+static int optind = 1, opterr = 1, optopt;
+
+static char *next = NULL;
+
+static int getopt(int argc, char * const argv[], const char *optstring) {
+    if (optind == 0) {
+        optind = 1;
+        next = NULL;
+    }
+    if (next == NULL || *next == '\0') {
+        if (optind == argc || argv[optind][0] != '-' || argv[optind][1] == '\0') {
+            return -1;
+        }
+        if (strcmp(argv[optind], "--") == 0) {
+            optind++;
+            return -1;
+        }
+        next = argv[optind] + 1;
+        optind++;
+    }
+
+    optopt = *next++;
+    const char *opt = strchr(optstring, optopt);
+    if (opt == NULL || optopt == ':') {
+        if (opterr) {
+            fprintf(stderr, "Unknown option -%c\n", optopt);
+        }
+        return '?';
+    }
+    if (opt[1] == ':') {
+        if (*next != '\0') {
+            optarg = next;
+            next = NULL;
+        } else if (optind < argc) {
+            optarg = argv[optind];
+            optind++;
+        } else {
+            if (opterr) {
+                fprintf(stderr, "Option -%c requires an argument\n", optopt);
+            }
+            return '?';
+        }
+    }
+    return optopt;
+}
+#endif
+
 bool handleArguments(const int& argc, char** argv)
 {
     int c;
@@ -107,7 +159,11 @@ int main(int argc, char** argv)
 
     command_manager->showCommand();
 
+#ifdef _WIN32
+    GIOChannel* channel = g_io_channel_unix_new(0);
+#else
     GIOChannel* channel = g_io_channel_unix_new(STDIN_FILENO);
+#endif
     g_io_add_watch(channel, (GIOCondition)(G_IO_IN | G_IO_ERR | G_IO_HUP | G_IO_NVAL), onKeyInput, command_manager.get());
     g_io_channel_unref(channel);
 
