@@ -19,6 +19,7 @@
 #include <memory>
 #include <signal.h>
 #include <string.h>
+#include <sstream>
 
 #ifndef _WIN32
 #include <unistd.h>
@@ -31,16 +32,18 @@ static std::shared_ptr<SDKManagerWrapper> sdk_manager_wrapper = nullptr;
 static std::shared_ptr<CommandManager> command_manager = nullptr;
 static GMainLoop* loop = nullptr;
 
-std::vector<std::string> parseArguments(char* args)
+std::vector<std::string> parseArguments(std::string args)
 {
     std::vector<std::string> arguments;
+    std::istringstream iss(args);
+    std::string command;
+    std::string param;
 
-    char* tmp;
-    tmp = strtok(args, " ");
-    while (tmp != NULL) {
-        arguments.emplace_back(std::string(tmp));
-        tmp = strtok(NULL, " ");
-    }
+    iss >> command;
+    arguments.emplace_back(command);
+    std::getline(iss, param);
+    if (param.size())
+        arguments.emplace_back(param);
 
     return arguments;
 }

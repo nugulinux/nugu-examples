@@ -121,6 +121,7 @@ void CommandManager::handleUserCommand(const std::vector<std::string>& arguments
         std::string command = arguments.at(0);
         std::string param = arguments.size() > 1 ? arguments.at(1) : "";
 
+        param.erase(std::remove(param.begin(), param.end(), '"'), param.end());
         pimpl->key_handle_factory.at(command)(param);
     } catch (const std::out_of_range& e) {
         error("No Command exist!");
