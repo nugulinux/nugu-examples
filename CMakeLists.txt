@@ -17,7 +17,7 @@ SET(CMAKE_C_EXTENSIONS ON)
 # setup storage path
 SET(storagedir "/var/lib/nugu/storage")
 IF(ENABLE_HOME_STORAGE_DIR)
-    SET(storagedir $ENV{HOME}/.nugu)
+	SET(storagedir $ENV{HOME}/.nugu)
 ENDIF()
 
 pkg_check_modules(pkgs REQUIRED nugu-extension)
@@ -26,11 +26,13 @@ FOREACH(flag ${pkgs_CFLAGS})
 ENDFOREACH(flag)
 
 IF (ENABLE_NUGU_EXTENSION_SAMPLE)
-    ADD_SUBDIRECTORY(extension)
+	ADD_SUBDIRECTORY(extension)
 ENDIF()
 
 IF (ENABLE_NUGU_GUI_SAMPLE)
-    ADD_SUBDIRECTORY(gui)
+	ADD_SUBDIRECTORY(gui)
 ENDIF()
 
-ADD_SUBDIRECTORY(auth)
+IF (ENABLE_NUGU_AUTH_SAMPLE)
+	ADD_SUBDIRECTORY(auth)
+ENDIF()
