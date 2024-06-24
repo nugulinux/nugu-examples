@@ -7,6 +7,7 @@ ENDMACRO(DEFINE_FEATURE)
 
 DEFINE_FEATURE(NUGU_EXTENSION_SAMPLE "Enable NUGU extension sample" ON)
 DEFINE_FEATURE(NUGU_GUI_SAMPLE "Enable NUGU gui sample" ON)
+DEFINE_FEATURE(NUGU_AUTH_SAMPLE "Enable NUGU auth sample" ON)
 DEFINE_FEATURE(HOME_STORAGE_DIR "Enable to use user home directory to storage" OFF)
 
 feature_summary(WHAT ALL)
